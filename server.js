@@ -8,7 +8,8 @@ app.use(express.static('public'));
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.set('view engine','ejs');
+app.set('view engine', 'pug');
+
 app.listen(3000, function() {
   db.sequelize.sync();
 });

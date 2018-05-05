@@ -1,0 +1,22 @@
+doctype html
+html
+	head
+		meta(name="description" content="TODO List - Template")
+		meta(charset="utf-8")
+		title YourTask
+		link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous")
+	body
+		.container
+			br
+			h1 TODO List
+			form(action="/addTask" method="post")
+				.form-group
+				input.form-control(type="text" placeholder="Enter the new task" name="task")
+				button.btn.btn-primary(type="submit") Add
+		hr
+		.container
+			form(action="/deleteTask" method="post")
+				each task in tasks
+					input#checkedTask.form-check-input(type="checkbox")
+					a(href="/task/#{task.id}") #{task.id}.#{task.title}
+					br
