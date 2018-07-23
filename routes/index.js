@@ -1,5 +1,5 @@
-const taskController = require('../controllers/taskController.js');
 const userController = require('../controllers/userController.js');
+const pageController = require('../controllers/pageController.js');
 
 function checkAuth(req, res, next) {
 	if(!req.session.user_id) {
@@ -11,16 +11,14 @@ function checkAuth(req, res, next) {
 
 module.exports = function (app) {
 
-  app.get('/tasks',checkAuth, taskController.index);
-  app.get('/api/tasks', taskController.indexApi);
   app.get('/',userController.loginPage);
-  app.get('/register',userController.registerPage);
-  app.get('/tasks/edit/',checkAuth, taskController.editTask);
-  app.get('/tasks/delete/',checkAuth, taskController.deleteTask);    
+  app.get('/login',userController.loginPage);
+  app.get('/logout',userController.logout);
+  app.get('/signup',userController.registerPage);
 
-  app.post('/addTask', taskController.addTask);
-  app.post('/tasks/edit/', taskController.updateTask);
-  app.post('/register',userController.register);
+  app.get('/index',checkAuth,pageController.indexPage);
+
+  app.post('/signup',userController.register);
   app.post('/login',userController.login);
 
 };

@@ -19,3 +19,6 @@ app.listen(3000, function() {
 
 
 var routes = require('./routes')(app);
+
+
+// 在JS透過eventloop有asynchronous

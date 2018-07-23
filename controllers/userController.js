@@ -8,15 +8,11 @@ let userController = {
     	res.render('login',{title:'Login'});
 	},
 	registerPage: function(req,res){
-    	res.render('register',{title:'Register'});
+    	res.render('signup',{title:'signup'});
 	},
 	register: function(req,res){
 		let username=req.body.username;
 		let password=req.body.password;
-		let repeat_password = req.body.repeat_password;
-		if(password!==repeat_password){
-			res.redirect(303,'/register')
-		}
 		password=bcrypt.hashSync(password,10);
 		User.create({
 			username: username,
@@ -24,7 +20,7 @@ let userController = {
 		})
 		.then(function(user){
 			req.session.user_id = user.id;
-			res.redirect(303,'/tasks');
+			res.redirect(303,'/index');
 		});
 	},
 	login: function(req,res){
@@ -37,16 +33,20 @@ let userController = {
 		})
 		.then(function (user){
 			if(!user){
-				res.redirect(303,'/register')
+				res.redirect(303,'/signup')
 			}else{
 				if(bcrypt.compare(password,user.passwd)){
 					req.session.user_id = user.id;
-					res.redirect(303,'/tasks');
+					res.redirect(303,'/index');
 				}else{
-					res.redirect(303,'/login')
+					res.redirect(303,'/')
 				}
 			}
 		})
+	},
+	logout: function(req,res){
+		req.session.destroy();
+		res.redirect(303,'/');
 	}	
 };
 module.exports = userController;
